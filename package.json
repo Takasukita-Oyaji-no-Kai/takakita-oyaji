@@ -3,6 +3,9 @@
 	"version": "0.1.0",
 	"private": true,
 	"type": "module",
+	"emdash": {
+		"seed": "seed/seed.json"
+	},
 	"scripts": {
 		"dev": "astro dev",
 		"build": "astro build",
