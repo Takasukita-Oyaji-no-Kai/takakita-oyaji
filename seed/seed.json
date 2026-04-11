@@ -103,5 +103,167 @@
 				}
 			]
 		}
-	]
+	],
+
+	"content": {
+		"activities": [
+			{
+				"id": "activity-mochi-tsuki",
+				"slug": "mochi-tsuki",
+				"status": "published",
+				"data": {
+					"title": "餅つき",
+					"month": "1月",
+					"location": "高洲北小学校",
+					"description": "新年の風物詩として、親子や地域のメンバーが集まり、杵と臼を使って協力しながら餅つきを行います。つきたてのお餅をみんなで丸めて味わい、一年の健康と幸せを願う温かな交流の場です。",
+					"order": 1
+				}
+			},
+			{
+				"id": "activity-sports-day",
+				"slug": "sports-day",
+				"status": "published",
+				"data": {
+					"title": "運動会",
+					"month": "5月",
+					"location": "高洲北小学校",
+					"description": "親子や地域の参加者がチームに分かれて競技を楽しむ運動会です。かけっこ、玉入れ、綱引きなど多彩な種目を通して、チームワークや体力づくりを促進しながら、世代を超えた絆を深めます。",
+					"order": 2
+				}
+			},
+			{
+				"id": "activity-dodgeball",
+				"slug": "dodgeball-tournament",
+				"status": "published",
+				"data": {
+					"title": "ドッジボール大会",
+					"month": "6月",
+					"location": "高洲北小学校",
+					"description": "高学年から低学年、保護者や先生まで参加する人気行事イベント。2025年はお隣の高洲小学校と合同開催も計画されています。子ども VS 大人で白熱した試合を楽しみます。",
+					"order": 3
+				}
+			},
+			{
+				"id": "activity-gakutoma",
+				"slug": "school-sleepover",
+				"status": "published",
+				"data": {
+					"title": "学校に泊まろう（ガクトマ）",
+					"month": "7月",
+					"location": "高洲北小学校",
+					"description": "校庭での水風船や水鉄砲遊び、夜の肝試しなど、非日常の体験を通じて自助・共助の大切さを学ぶイベントです。",
+					"order": 4
+				}
+			},
+			{
+				"id": "activity-music-festival",
+				"slug": "music-festival",
+				"status": "published",
+				"data": {
+					"title": "音楽フェスティバル（Music MeeTing）",
+					"month": "10月",
+					"location": "高洲北小学校",
+					"description": "参加型のコンサート形式イベントで、生演奏とワークショップを通じて芸術体験を提供します。",
+					"order": 5
+				}
+			}
+		],
+		"pages": [
+			{
+				"id": "page-home-hero",
+				"slug": "home-hero",
+				"status": "published",
+				"data": {
+					"title": "高北おやじの会",
+					"body": [
+						{
+							"_type": "block",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"text": "子どもたちと一緒に楽しむ、年間を通じたさまざまな活動。"
+								}
+							]
+						}
+					]
+				}
+			},
+			{
+				"id": "page-about",
+				"slug": "about",
+				"status": "published",
+				"data": {
+					"title": "私たちについて",
+					"body": [
+						{
+							"_type": "block",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"text": "高北おやじの会は、高洲北小学校に通う児童のおやじからなるゆるい集まりです。平成22年（2010年）に設立されました。"
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"style": "h2",
+							"children": [{ "_type": "span", "text": "おやじの会とは" }]
+						},
+						{
+							"_type": "block",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"text": "多くの子供たちと触れ合いながら高北のイベント活動を下支えすることで、おやじ同士の絆が広がり、子供たちの健全育成に繋がることを期待しています。"
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"text": "同時におやじたち自身もしっかり楽しむことができる会です。おやじたちのやりたいこと（子供たちが喜ぶこと）をどんどん提案いただき、実現することも可能です。これまでにスキー、釣り、BBQなどの実績もあります。"
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"text": "常に「できる時に、できることを楽しむ！」をモットーにしていますので、各々のご都合を優先してください。いつでも参加することができます。"
+								}
+							]
+						}
+					]
+				}
+			},
+			{
+				"id": "page-contact",
+				"slug": "contact",
+				"status": "published",
+				"data": {
+					"title": "お問い合わせ",
+					"body": [
+						{
+							"_type": "block",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"text": "お問い合わせには数日以内にご返信いたします。お気軽にどうぞ。"
+								}
+							]
+						}
+					]
+				}
+			}
+		]
+	}
 }
