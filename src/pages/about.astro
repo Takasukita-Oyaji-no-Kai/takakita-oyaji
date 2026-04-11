@@ -1,0 +1,56 @@
+---
+import { getEmDashEntry } from "emdash";
+import { PortableText } from "emdash/ui";
+import Base from "../layouts/Base.astro";
+import Squiggle from "../components/Squiggle.astro";
+
+const { entry: page, cacheHint } = await getEmDashEntry("pages", "about");
+if (cacheHint) Astro.cache.set(cacheHint);
+---
+
+<Base
+	title="私たちについて"
+	description="高北おやじの会は、高洲北小学校に通う児童のおやじからなるゆるい集まりです。"
+	content={page ? { collection: "pages", id: page.data.id, slug: "about" } : undefined}
+>
+	<section class="mx-auto max-w-5xl px-4 py-16 sm:px-6">
+		<header class="text-center">
+			<h1 class="text-4xl font-bold text-foreground sm:text-5xl">
+				{page?.data.title ?? "私たちについて"}
+			</h1>
+			<p class="mt-4 text-lg text-muted-foreground">
+				高洲北小学校に通う児童のおやじからなるゆるい集まりです
+			</p>
+		</header>
+
+		<Squiggle />
+
+		<div class="mx-auto max-w-3xl">
+			{
+				page?.data.body ? (
+					<div class="prose-body text-foreground/90" {...page.edit.body}>
+						<PortableText value={page.data.body} />
+					</div>
+				) : (
+					<p class="text-center text-muted-foreground">
+						コンテンツを準備中です。
+					</p>
+				)
+			}
+		</div>
+
+		<div class="mt-16 rounded-lg border border-border bg-card p-8 text-center">
+			<h2 class="text-2xl font-bold text-foreground">入会について</h2>
+			<p class="mt-4 text-foreground/80">
+				ご入会いただきますと、おやじの会の連絡メールが届くようになります。
+				<br />勿論、入会費用はかかりません。
+			</p>
+			<a
+				href="/contact"
+				class="mt-6 inline-block rounded-md bg-primary px-5 py-2.5 font-medium text-primary-foreground transition-opacity hover:opacity-90"
+			>
+				お問い合わせ
+			</a>
+		</div>
+	</section>
+</Base>

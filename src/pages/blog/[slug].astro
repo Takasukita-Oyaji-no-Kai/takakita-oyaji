@@ -1,0 +1,86 @@
+---
+import { getEmDashEntry } from "emdash";
+import { PortableText } from "emdash/ui";
+import Base from "../../layouts/Base.astro";
+import Squiggle from "../../components/Squiggle.astro";
+
+const { slug } = Astro.params;
+if (!slug) return Astro.redirect("/404");
+
+const { entry: post, cacheHint } = await getEmDashEntry("blog", slug);
+if (!post) return Astro.redirect("/404");
+if (cacheHint) Astro.cache.set(cacheHint);
+
+function getImageUrl(img: unknown): string | undefined {
+	if (!img || typeof img !== "object") return undefined;
+	const o = img as Record<string, unknown>;
+	if (typeof o.src === "string" && o.src) return o.src;
+	const meta = o.meta as Record<string, unknown> | undefined;
+	const key =
+		(typeof meta?.storageKey === "string" ? meta.storageKey : undefined) ||
+		(typeof o.id === "string" ? o.id : undefined);
+	return key ? `/_emdash/api/media/file/${key}` : undefined;
+}
+
+const heroUrl = getImageUrl(post.data.featured_image);
+const publishDate = post.data.publishedAt?.toLocaleDateString("ja-JP", {
+	year: "numeric",
+	month: "long",
+	day: "numeric",
+});
+---
+
+<Base
+	title={post.data.title}
+	description={post.data.excerpt ?? undefined}
+	type="article"
+	image={heroUrl}
+	publishedTime={post.data.publishedAt?.toISOString() ?? null}
+	modifiedTime={post.data.updatedAt.toISOString()}
+	content={{ collection: "blog", id: post.data.id, slug }}
+>
+	<article class="mx-auto max-w-3xl px-4 py-16 sm:px-6">
+		<header>
+			{
+				publishDate && (
+					<time class="text-sm text-muted-foreground">{publishDate}</time>
+				)
+			}
+			<h1
+				class="mt-2 text-4xl font-bold leading-tight text-foreground sm:text-5xl"
+				{...post.edit.title}
+			>
+				{post.data.title}
+			</h1>
+			{
+				post.data.excerpt && (
+					<p class="mt-4 text-lg text-muted-foreground">{post.data.excerpt}</p>
+				)
+			}
+		</header>
+
+		{
+			heroUrl && (
+				<div class="mt-10 overflow-hidden rounded-lg">
+					<img
+						src={heroUrl}
+						alt={post.data.title}
+						class="aspect-[16/9] w-full object-cover"
+					/>
+				</div>
+			)
+		}
+
+		<div class="prose-body mt-10 text-foreground/90" {...post.edit.body}>
+			<PortableText value={post.data.body} />
+		</div>
+
+		<Squiggle />
+
+		<div class="mt-8 text-center">
+			<a href="/blog" class="text-sm text-primary hover:opacity-80">
+				← ブログ一覧へ戻る
+			</a>
+		</div>
+	</article>
+</Base>

@@ -2,32 +2,24 @@
 import Base from "../layouts/Base.astro";
 ---
 
-<Base title="Page not found">
-	<div class="not-found">
-		<h1>404</h1>
-		<p>The page you're looking for doesn't exist.</p>
-		<a href="/">Go back home</a>
-	</div>
+<Base title="ページが見つかりません" robots="noindex, nofollow">
+	<section
+		class="mx-auto flex min-h-[60vh] max-w-5xl flex-col items-center justify-center px-4 py-16 text-center sm:px-6"
+	>
+		<p class="text-sm font-medium uppercase tracking-wider text-primary">
+			404
+		</p>
+		<h1 class="mt-2 text-4xl font-bold text-foreground sm:text-5xl">
+			ページが見つかりません
+		</h1>
+		<p class="mt-4 max-w-md text-muted-foreground">
+			お探しのページは移動または削除された可能性があります。
+		</p>
+		<a
+			href="/"
+			class="mt-8 inline-block rounded-md bg-primary px-5 py-2.5 font-medium text-primary-foreground transition-opacity hover:opacity-90"
+		>
+			ホームに戻る
+		</a>
+	</section>
 </Base>
-
-<style>
-	.not-found {
-		text-align: center;
-		padding: var(--spacing-24) var(--spacing-6);
-	}
-
-	.not-found h1 {
-		font-size: var(--font-size-5xl);
-		margin-bottom: var(--spacing-2);
-		color: var(--color-border);
-	}
-
-	.not-found p {
-		color: var(--color-muted);
-		margin-bottom: var(--spacing-6);
-	}
-
-	.not-found a {
-		color: var(--color-text);
-	}
-</style>
