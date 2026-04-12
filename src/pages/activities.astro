@@ -1,0 +1,119 @@
+---
+import { getEmDashCollection } from "emdash";
+import Base from "../layouts/Base.astro";
+import Squiggle from "../components/Squiggle.astro";
+
+const { entries: activities, cacheHint } = await getEmDashCollection(
+	"activities",
+	{
+		status: "published",
+		orderBy: { created_at: "asc" },
+	},
+);
+if (cacheHint) Astro.cache.set(cacheHint);
+
+function getImageUrl(img: unknown): string | undefined {
+	if (!img || typeof img !== "object") return undefined;
+	const o = img as Record<string, unknown>;
+	if (typeof o.src === "string" && o.src) return o.src;
+	const meta = o.meta as Record<string, unknown> | undefined;
+	const key =
+		(typeof meta?.storageKey === "string" ? meta.storageKey : undefined) ||
+		(typeof o.id === "string" ? o.id : undefined);
+	return key ? `/_emdash/api/media/file/${key}` : undefined;
+}
+---
+
+<Base
+	title="活動内容"
+	description="高北おやじの会では年間を通じてさまざまな活動を行っています。"
+>
+	<section class="mx-auto max-w-5xl px-4 py-16 sm:px-6">
+		<header class="text-center">
+			<h1 class="text-4xl font-bold text-foreground sm:text-5xl">活動内容</h1>
+			<p class="mt-4 text-lg text-muted-foreground">
+				年間を通じてさまざまな活動を行っています。<br />
+				子どもたちと一緒に楽しみながら、貴重な経験を提供しています。
+			</p>
+		</header>
+
+		<Squiggle />
+
+		{
+			activities.length === 0 ? (
+				<p class="mt-12 text-center text-muted-foreground">
+					活動情報を準備中です。
+				</p>
+			) : (
+				<div class="mt-8 space-y-20">
+					{activities.map((activity, i) => {
+						const imgUrl = getImageUrl(activity.data.image);
+						const imageOnLeft = i % 2 === 0;
+						return (
+							<article
+								id={activity.id ?? undefined}
+								class="grid items-center gap-8 sm:grid-cols-[1fr_1.2fr]"
+							>
+								{imgUrl && (
+									<div
+										class:list={[
+											"overflow-hidden rounded-lg",
+											imageOnLeft ? "sm:order-1 sm:-ml-6" : "sm:order-2 sm:-mr-6",
+										]}
+									>
+										<img
+											src={imgUrl}
+											alt={activity.data.title}
+											class="aspect-[4/3] w-full object-cover"
+										/>
+									</div>
+								)}
+								<div
+									class:list={[
+										imageOnLeft ? "sm:order-2" : "sm:order-1",
+									]}
+								>
+									<p class="text-sm font-medium uppercase tracking-wider text-primary">
+										{activity.data.month}
+									</p>
+									<h2 class="mt-2 text-2xl font-bold text-foreground sm:text-3xl">
+										{activity.data.title}
+									</h2>
+									{activity.data.location && (
+										<p class="mt-1 text-sm text-muted-foreground">
+											📍 {activity.data.location}
+										</p>
+									)}
+									{activity.data.description && (
+										<p class="mt-4 leading-relaxed text-foreground/80">
+											{activity.data.description}
+										</p>
+									)}
+								</div>
+							</article>
+						);
+					})}
+				</div>
+			)
+		}
+
+		<Squiggle />
+
+		<div class="rounded-lg border border-border bg-card p-8 text-center">
+			<h2 class="text-2xl font-bold text-foreground">活動に参加するには</h2>
+			<p class="mt-4 text-foreground/80">
+				高北おやじの会の活動は、原則として会員のお子さんが参加できますが、<br />
+				一部のイベントは地域の子どもたちにも開放しています。
+			</p>
+			<p class="mt-2 text-foreground/80">
+				入会やイベント参加に関するお問い合わせは下記からお願いします。
+			</p>
+			<a
+				href="/contact"
+				class="mt-6 inline-block rounded-md bg-primary px-5 py-2.5 font-medium text-primary-foreground transition-opacity hover:opacity-90"
+			>
+				お問い合わせ
+			</a>
+		</div>
+	</section>
+</Base>

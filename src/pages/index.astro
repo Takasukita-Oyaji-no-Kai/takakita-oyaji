@@ -1,0 +1,250 @@
+---
+import { getEmDashCollection, getEmDashEntry } from "emdash";
+import { PortableText } from "emdash/ui";
+import Base from "../layouts/Base.astro";
+import Squiggle from "../components/Squiggle.astro";
+
+const { entry: hero, cacheHint: heroHint } = await getEmDashEntry(
+	"pages",
+	"home-hero",
+);
+if (heroHint) Astro.cache.set(heroHint);
+
+const { entries: values, cacheHint: valuesHint } = await getEmDashCollection(
+	"values",
+	{
+		status: "published",
+		orderBy: { created_at: "asc" },
+	},
+);
+if (valuesHint) Astro.cache.set(valuesHint);
+
+const { entries: activities, cacheHint: activitiesHint } =
+	await getEmDashCollection("activities", {
+		status: "published",
+		orderBy: { created_at: "asc" },
+		limit: 3,
+	});
+if (activitiesHint) Astro.cache.set(activitiesHint);
+
+const { entries: posts, cacheHint: postsHint } = await getEmDashCollection(
+	"blog",
+	{
+		status: "published",
+		orderBy: { published_at: "desc" },
+		limit: 3,
+	},
+);
+if (postsHint) Astro.cache.set(postsHint);
+
+function getImageUrl(img: unknown): string | undefined {
+	if (!img || typeof img !== "object") return undefined;
+	const o = img as Record<string, unknown>;
+	if (typeof o.src === "string" && o.src) return o.src;
+	const meta = o.meta as Record<string, unknown> | undefined;
+	const key =
+		(typeof meta?.storageKey === "string" ? meta.storageKey : undefined) ||
+		(typeof o.id === "string" ? o.id : undefined);
+	return key ? `/_emdash/api/media/file/${key}` : undefined;
+}
+
+const heroBg = getImageUrl(hero?.data.image) ?? "/hero.jpeg";
+---
+
+<Base title="高北おやじの会">
+	{/* Hero */}
+	<section class="relative isolate overflow-hidden">
+		<img
+			src={heroBg}
+			alt=""
+			aria-hidden="true"
+			class="absolute inset-0 -z-10 h-full w-full object-cover"
+		/>
+		<div class="absolute inset-0 -z-10 bg-foreground/55"></div>
+		<div
+			class="mx-auto flex min-h-[60vh] max-w-5xl flex-col items-center justify-center px-4 py-24 text-center text-background sm:px-6"
+		>
+			<h1 class="text-4xl font-bold leading-tight sm:text-6xl">
+				{hero?.data.title ?? "高北おやじの会"}
+			</h1>
+			<p class="mt-3 text-lg sm:text-xl">高洲北小学校</p>
+			{
+				hero?.data.body && (
+					<div class="prose-body mt-6 max-w-2xl text-base text-background/90">
+						<PortableText value={hero.data.body} />
+					</div>
+				)
+			}
+			<div class="mt-10 flex flex-wrap items-center justify-center gap-3">
+				<a
+					href="/about"
+					class="rounded-md bg-primary px-5 py-2.5 font-medium text-primary-foreground transition-opacity hover:opacity-90"
+				>
+					私たちについて
+				</a>
+				<a
+					href="/activities"
+					class="rounded-md border border-background/70 px-5 py-2.5 font-medium text-background transition-colors hover:bg-background/10"
+				>
+					活動を見る
+				</a>
+			</div>
+		</div>
+	</section>
+
+	<Squiggle />
+
+	{/* Values */}
+	{
+		values.length > 0 && (
+			<section class="mx-auto max-w-5xl px-4 sm:px-6">
+				<header class="text-center">
+					<h2 class="text-3xl font-bold text-foreground">活動理念</h2>
+					<p class="mt-3 text-muted-foreground">
+						私たちが大切にしていること
+					</p>
+				</header>
+				<div class="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+					{values.map((v) => (
+						<article class="rounded-lg border border-border bg-card p-6 transition-colors hover:border-primary">
+							<h3 class="text-lg font-bold text-foreground">{v.data.title}</h3>
+							{v.data.description && (
+								<p class="mt-3 text-sm leading-relaxed text-muted-foreground">
+									{v.data.description}
+								</p>
+							)}
+						</article>
+					))}
+				</div>
+			</section>
+		)
+	}
+
+	<Squiggle />
+
+	{/* Featured activities */}
+	<section class="mx-auto max-w-5xl px-4 sm:px-6">
+		<header class="text-center">
+			<h2 class="text-3xl font-bold text-foreground">主な活動内容</h2>
+			<p class="mt-3 text-muted-foreground">
+				年間を通じて、季節ごとにさまざまなイベントを開催しています
+			</p>
+		</header>
+
+		{
+			activities.length === 0 ? (
+				<p class="mt-12 text-center text-muted-foreground">
+					活動情報を準備中です。
+				</p>
+			) : (
+				<div class="mt-12 space-y-16">
+					{activities.map((activity, i) => {
+						const imgUrl = getImageUrl(activity.data.image);
+						const imageSide = i % 2 === 0 ? "left" : "right";
+						return (
+							<article class="grid items-center gap-8 sm:grid-cols-[1.2fr_1fr]">
+								{imageSide === "left" && imgUrl && (
+									<div class="overflow-hidden rounded-lg sm:-ml-6">
+										<img
+											src={imgUrl}
+											alt={activity.data.title}
+											class="aspect-[4/3] w-full object-cover"
+										/>
+									</div>
+								)}
+								<div
+									class:list={[
+										imageSide === "left" ? "order-2" : "order-1",
+									]}
+								>
+									<p class="text-sm font-medium uppercase tracking-wider text-primary">
+										{activity.data.month}
+									</p>
+									<h3 class="mt-2 text-2xl font-bold text-foreground">
+										{activity.data.title}
+									</h3>
+									{activity.data.location && (
+										<p class="mt-1 text-sm text-muted-foreground">
+											{activity.data.location}
+										</p>
+									)}
+									{activity.data.description && (
+										<p class="mt-4 text-foreground/80">
+											{activity.data.description}
+										</p>
+									)}
+								</div>
+								{imageSide === "right" && imgUrl && (
+									<div class="order-2 overflow-hidden rounded-lg sm:-mr-6">
+										<img
+											src={imgUrl}
+											alt={activity.data.title}
+											class="aspect-[4/3] w-full object-cover"
+										/>
+									</div>
+								)}
+							</article>
+						);
+					})}
+				</div>
+			)
+		}
+
+		<div class="mt-12 text-center">
+			<a
+				href="/activities"
+				class="inline-block rounded-md bg-primary px-5 py-2.5 font-medium text-primary-foreground transition-opacity hover:opacity-90"
+			>
+				すべての活動を見る
+			</a>
+		</div>
+	</section>
+
+	<Squiggle />
+
+	{/* Latest blog */}
+	<section class="mx-auto max-w-5xl px-4 sm:px-6">
+		<header class="text-center">
+			<h2 class="text-3xl font-bold text-foreground">最新の投稿</h2>
+		</header>
+		{
+			posts.length === 0 ? (
+				<p class="mt-12 text-center text-muted-foreground">
+					まだ投稿はありません。
+				</p>
+			) : (
+				<div class="mt-12 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+					{posts.map((post) => {
+						const imgUrl = getImageUrl(post.data.featured_image);
+						return (
+							<a
+								href={`/blog/${post.id}`}
+								class="group block overflow-hidden rounded-lg border border-border bg-card transition-colors hover:border-primary"
+							>
+								{imgUrl && (
+									<img
+										src={imgUrl}
+										alt={post.data.title}
+										class="aspect-[4/3] w-full object-cover transition-transform group-hover:scale-[1.02]"
+									/>
+								)}
+								<div class="p-5">
+									<h3 class="text-lg font-bold text-foreground">
+										{post.data.title}
+									</h3>
+									{post.data.excerpt && (
+										<p class="mt-2 text-sm text-muted-foreground">
+											{post.data.excerpt}
+										</p>
+									)}
+								</div>
+							</a>
+						);
+					})}
+				</div>
+			)
+		}
+	</section>
+
+	<Squiggle />
+</Base>

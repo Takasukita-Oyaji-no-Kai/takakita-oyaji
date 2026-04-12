@@ -1,0 +1,95 @@
+---
+/*
+ * Catch-all renderer for admin-created pages.
+ *
+ * Astro explicit routes take precedence over catch-all routes, so the
+ * existing /about, /contact, /activities, /blog, /404 and /_emdash/*
+ * routes are unaffected. Anything else falls through here.
+ *
+ * Internal slugs (content that feeds another page's sections rather
+ * than standing on its own URL) are denylisted below — the admin can
+ * still edit them, but visiting them as a URL 404s instead of
+ * duplicating the hero copy.
+ */
+import { getEmDashEntry } from "emdash";
+import { PortableText } from "emdash/ui";
+import Base from "../layouts/Base.astro";
+import Squiggle from "../components/Squiggle.astro";
+
+// Slugs that live in the `pages` collection but are used as content
+// fragments for other pages, not as standalone routes.
+const INTERNAL_SLUGS = new Set(["home-hero"]);
+
+const rawSlug = Astro.params.slug;
+if (!rawSlug || typeof rawSlug !== "string") {
+	return Astro.rewrite("/404");
+}
+
+// Multi-segment slugs (e.g. /foo/bar) aren't supported by the pages
+// collection — reject them early.
+if (rawSlug.includes("/") || INTERNAL_SLUGS.has(rawSlug)) {
+	return Astro.rewrite("/404");
+}
+
+const { entry: page, cacheHint } = await getEmDashEntry("pages", rawSlug);
+if (!page) return Astro.rewrite("/404");
+if (cacheHint) Astro.cache.set(cacheHint);
+
+function getImageUrl(img: unknown): string | undefined {
+	if (!img || typeof img !== "object") return undefined;
+	const o = img as Record<string, unknown>;
+	if (typeof o.src === "string" && o.src) return o.src;
+	const meta = o.meta as Record<string, unknown> | undefined;
+	const key =
+		(typeof meta?.storageKey === "string" ? meta.storageKey : undefined) ||
+		(typeof o.id === "string" ? o.id : undefined);
+	return key ? `/_emdash/api/media/file/${key}` : undefined;
+}
+
+const heroUrl = getImageUrl(page.data.image);
+---
+
+<Base
+	title={page.data.title}
+	image={heroUrl}
+	content={{ collection: "pages", id: page.data.id, slug: rawSlug }}
+>
+	<section class="mx-auto max-w-5xl px-4 py-16 sm:px-6">
+		<header class="text-center">
+			<h1
+				class="text-4xl font-bold text-foreground sm:text-5xl"
+				{...page.edit.title}
+			>
+				{page.data.title}
+			</h1>
+		</header>
+
+		<Squiggle />
+
+		{
+			heroUrl && (
+				<div class="mx-auto mb-12 max-w-4xl overflow-hidden rounded-lg">
+					<img
+						src={heroUrl}
+						alt={page.data.title}
+						class="aspect-[16/9] w-full object-cover"
+					/>
+				</div>
+			)
+		}
+
+		<div class="mx-auto max-w-3xl">
+			{
+				page.data.body ? (
+					<div class="prose-body text-foreground/90" {...page.edit.body}>
+						<PortableText value={page.data.body} />
+					</div>
+				) : (
+					<p class="text-center text-muted-foreground">
+						コンテンツを準備中です。
+					</p>
+				)
+			}
+		</div>
+	</section>
+</Base>

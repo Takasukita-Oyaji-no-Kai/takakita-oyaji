@@ -1,0 +1,407 @@
+{
+	"$schema": "https://emdashcms.com/seed.schema.json",
+	"version": "1",
+	"meta": {
+		"name": "高北おやじの会",
+		"description": "高洲北小学校 高北おやじの会の公式サイト",
+		"author": "高北おやじの会"
+	},
+
+	"settings": {
+		"title": "高北おやじの会",
+		"tagline": "高洲北小学校"
+	},
+
+	"collections": [
+		{
+			"slug": "blog",
+			"label": "ブログ",
+			"urlPattern": "/blog/{slug}",
+			"supports": ["drafts", "revisions", "search", "seo"],
+			"fields": [
+				{
+					"slug": "title",
+					"label": "タイトル",
+					"type": "string",
+					"required": true,
+					"searchable": true
+				},
+				{
+					"slug": "featured_image",
+					"label": "アイキャッチ画像",
+					"type": "image"
+				},
+				{
+					"slug": "excerpt",
+					"label": "抜粋",
+					"type": "text"
+				},
+				{
+					"slug": "body",
+					"label": "本文",
+					"type": "portableText",
+					"searchable": true
+				}
+			]
+		},
+		{
+			"slug": "activities",
+			"label": "活動内容",
+			"supports": ["drafts", "revisions"],
+			"fields": [
+				{
+					"slug": "title",
+					"label": "タイトル",
+					"type": "string",
+					"required": true,
+					"searchable": true
+				},
+				{
+					"slug": "month",
+					"label": "実施月",
+					"type": "string",
+					"required": true
+				},
+				{
+					"slug": "location",
+					"label": "場所",
+					"type": "string"
+				},
+				{
+					"slug": "description",
+					"label": "説明",
+					"type": "text"
+				},
+				{
+					"slug": "image",
+					"label": "画像",
+					"type": "image"
+				},
+				{
+					"slug": "order",
+					"label": "並び順",
+					"type": "integer"
+				}
+			]
+		},
+		{
+			"slug": "pages",
+			"label": "ページ",
+			"urlPattern": "/{slug}",
+			"supports": ["drafts", "revisions"],
+			"fields": [
+				{
+					"slug": "title",
+					"label": "タイトル",
+					"type": "string",
+					"required": true,
+					"searchable": true
+				},
+				{
+					"slug": "image",
+					"label": "メイン画像",
+					"type": "image"
+				},
+				{
+					"slug": "body",
+					"label": "本文",
+					"type": "portableText",
+					"searchable": true
+				}
+			]
+		},
+		{
+			"slug": "values",
+			"label": "活動理念",
+			"supports": ["drafts", "revisions"],
+			"fields": [
+				{
+					"slug": "title",
+					"label": "タイトル",
+					"type": "string",
+					"required": true,
+					"searchable": true
+				},
+				{
+					"slug": "description",
+					"label": "説明",
+					"type": "text",
+					"searchable": true
+				},
+				{
+					"slug": "order",
+					"label": "並び順",
+					"type": "integer"
+				}
+			]
+		}
+	],
+
+	"menus": [
+		{
+			"name": "primary",
+			"label": "メインナビゲーション",
+			"items": [
+				{ "type": "custom", "label": "ホーム", "url": "/" },
+				{ "type": "custom", "label": "私たちについて", "url": "/about" },
+				{ "type": "custom", "label": "活動内容", "url": "/activities" },
+				{ "type": "custom", "label": "ブログ", "url": "/blog" },
+				{ "type": "custom", "label": "お問い合わせ", "url": "/contact" }
+			]
+		}
+	],
+
+	"content": {
+		"activities": [
+			{
+				"id": "activity-mochi-tsuki",
+				"slug": "mochi-tsuki",
+				"status": "published",
+				"data": {
+					"title": "餅つき",
+					"month": "1月",
+					"location": "高洲北小学校",
+					"description": "新年の風物詩として、親子や地域のメンバーが集まり、杵と臼を使って協力しながら餅つきを行います。つきたてのお餅をみんなで丸めて味わい、一年の健康と幸せを願う温かな交流の場です。",
+					"order": 1
+				}
+			},
+			{
+				"id": "activity-sports-day",
+				"slug": "sports-day",
+				"status": "published",
+				"data": {
+					"title": "運動会",
+					"month": "5月",
+					"location": "高洲北小学校",
+					"description": "親子や地域の参加者がチームに分かれて競技を楽しむ運動会です。かけっこ、玉入れ、綱引きなど多彩な種目を通して、チームワークや体力づくりを促進しながら、世代を超えた絆を深めます。",
+					"order": 2
+				}
+			},
+			{
+				"id": "activity-dodgeball",
+				"slug": "dodgeball-tournament",
+				"status": "published",
+				"data": {
+					"title": "ドッジボール大会",
+					"month": "6月",
+					"location": "高洲北小学校",
+					"description": "高学年から低学年、保護者や先生まで参加する人気行事イベント。2025年はお隣の高洲小学校と合同開催も計画されています。子ども VS 大人で白熱した試合を楽しみます。",
+					"order": 3
+				}
+			},
+			{
+				"id": "activity-gakutoma",
+				"slug": "school-sleepover",
+				"status": "published",
+				"data": {
+					"title": "学校に泊まろう（ガクトマ）",
+					"month": "7月",
+					"location": "高洲北小学校",
+					"description": "校庭での水風船や水鉄砲遊び、夜の肝試しなど、非日常の体験を通じて自助・共助の大切さを学ぶイベントです。",
+					"order": 4
+				}
+			},
+			{
+				"id": "activity-music-festival",
+				"slug": "music-festival",
+				"status": "published",
+				"data": {
+					"title": "音楽フェスティバル（Music MeeTing）",
+					"month": "10月",
+					"location": "高洲北小学校",
+					"description": "参加型のコンサート形式イベントで、生演奏とワークショップを通じて芸術体験を提供します。",
+					"order": 5
+				}
+			}
+		],
+		"values": [
+			{
+				"id": "value-children",
+				"slug": "children",
+				"status": "published",
+				"data": {
+					"title": "子どもたちとの触れ合い",
+					"description": "イベント活動を通じて、子どもたちと楽しく交流し、健全な成長をサポートします。",
+					"order": 1
+				}
+			},
+			{
+				"id": "value-bonds",
+				"slug": "bonds",
+				"status": "published",
+				"data": {
+					"title": "おやじ同士の絆",
+					"description": "活動を通じておやじ同士の交流を深め、互いに支え合う関係を築きます。",
+					"order": 2
+				}
+			},
+			{
+				"id": "value-fun",
+				"slug": "fun",
+				"status": "published",
+				"data": {
+					"title": "楽しむこと",
+					"description": "おやじたち自身もしっかり楽しむことができる会です。できる時に、できることを楽しむ！",
+					"order": 3
+				}
+			},
+			{
+				"id": "value-track-record",
+				"slug": "track-record",
+				"status": "published",
+				"data": {
+					"title": "活動の実績",
+					"description": "スキー、釣り、BBQなど、様々な活動を実現してきました。",
+					"order": 4
+				}
+			}
+		],
+		"pages": [
+			{
+				"id": "page-home-hero",
+				"slug": "home-hero",
+				"status": "published",
+				"data": {
+					"title": "高北おやじの会",
+					"body": [
+						{
+							"_type": "block",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"text": "子どもたちと一緒に楽しむ、年間を通じたさまざまな活動。"
+								}
+							]
+						}
+					]
+				}
+			},
+			{
+				"id": "page-about",
+				"slug": "about",
+				"status": "published",
+				"data": {
+					"title": "私たちについて",
+					"body": [
+						{
+							"_type": "block",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"text": "高北おやじの会は、高洲北小学校に通う児童のおやじからなるゆるい集まりです。平成22年（2010年）に設立されました。"
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"style": "h2",
+							"children": [{ "_type": "span", "text": "おやじの会とは" }]
+						},
+						{
+							"_type": "block",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"text": "多くの子供たちと触れ合いながら高北のイベント活動を下支えすることで、おやじ同士の絆が広がり、子供たちの健全育成に繋がることを期待しています。"
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"text": "同時におやじたち自身もしっかり楽しむことができる会です。おやじたちのやりたいこと（子供たちが喜ぶこと）をどんどん提案いただき、実現することも可能です。これまでにスキー、釣り、BBQなどの実績もあります。"
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"text": "常に「できる時に、できることを楽しむ！」をモットーにしていますので、各々のご都合を優先してください。いつでも参加することができます。"
+								}
+							]
+						}
+					]
+				}
+			},
+			{
+				"id": "page-contact",
+				"slug": "contact",
+				"status": "published",
+				"data": {
+					"title": "お問い合わせ",
+					"body": [
+						{
+							"_type": "block",
+							"style": "h3",
+							"children": [{ "_type": "span", "text": "メールアドレス" }]
+						},
+						{
+							"_type": "block",
+							"style": "normal",
+							"markDefs": [
+								{
+									"_key": "contact-email-link",
+									"_type": "link",
+									"href": "mailto:info@takakitaoyaji.com"
+								}
+							],
+							"children": [
+								{
+									"_type": "span",
+									"text": "info@takakitaoyaji.com",
+									"marks": ["contact-email-link"]
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"style": "h3",
+							"children": [{ "_type": "span", "text": "入会について" }]
+						},
+						{
+							"_type": "block",
+							"style": "normal",
+							"children": [
+								{ "_type": "span", "text": "入会費用はかかりません。" }
+							]
+						},
+						{
+							"_type": "block",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"text": "ご入会いただきますと、おやじの会の連絡メールが届くようになります。"
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"style": "h3",
+							"children": [{ "_type": "span", "text": "返信について" }]
+						},
+						{
+							"_type": "block",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"text": "お問い合わせには数日以内にご返信いたします。お気軽にどうぞ。"
+								}
+							]
+						}
+					]
+				}
+			}
+		]
+	}
+}

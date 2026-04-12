@@ -1,0 +1,134 @@
+---
+import { getMenu } from "emdash";
+
+const menu = await getMenu("primary");
+const items = menu?.items ?? [];
+
+const pathname = Astro.url.pathname.replace(/\/+$/, "") || "/";
+const isActive = (url: string) => {
+	if (url === "/") return pathname === "/";
+	return pathname === url || pathname.startsWith(`${url}/`);
+};
+---
+
+<header
+	class="sticky top-0 z-50 border-b border-border bg-background/95 backdrop-blur-sm"
+>
+	<div class="mx-auto flex h-16 max-w-5xl items-center justify-between px-4 sm:px-6">
+		<a href="/" class="flex items-center gap-2 font-bold text-foreground">
+			<img src="/logo.png" alt="高北おやじの会" class="h-9 w-9" />
+			<span class="hidden sm:inline">高北おやじの会</span>
+		</a>
+
+		<nav class="hidden md:block">
+			<ul class="flex items-center gap-7 text-sm">
+				{
+					items.map((item) => (
+						<li>
+							<a
+								href={item.url}
+								target={item.target}
+								class:list={[
+									"transition-colors hover:text-primary",
+									isActive(item.url)
+										? "font-medium text-primary"
+										: "text-foreground/80",
+								]}
+							>
+								{item.label}
+							</a>
+						</li>
+					))
+				}
+			</ul>
+		</nav>
+
+		<button
+			id="nav-toggle"
+			type="button"
+			class="md:hidden rounded p-2 text-foreground hover:bg-secondary"
+			aria-controls="mobile-nav"
+			aria-expanded="false"
+			aria-label="メニューを開く"
+		>
+			<svg
+				id="nav-icon-open"
+				width="22"
+				height="22"
+				viewBox="0 0 24 24"
+				fill="none"
+				stroke="currentColor"
+				stroke-width="2"
+				stroke-linecap="round"
+				stroke-linejoin="round"
+				aria-hidden="true"
+			>
+				<line x1="3" y1="6" x2="21" y2="6"></line>
+				<line x1="3" y1="12" x2="21" y2="12"></line>
+				<line x1="3" y1="18" x2="21" y2="18"></line>
+			</svg>
+			<svg
+				id="nav-icon-close"
+				width="22"
+				height="22"
+				viewBox="0 0 24 24"
+				fill="none"
+				stroke="currentColor"
+				stroke-width="2"
+				stroke-linecap="round"
+				stroke-linejoin="round"
+				aria-hidden="true"
+				class="hidden"
+			>
+				<line x1="18" y1="6" x2="6" y2="18"></line>
+				<line x1="6" y1="6" x2="18" y2="18"></line>
+			</svg>
+		</button>
+	</div>
+
+	<div
+		id="mobile-nav"
+		class="hidden border-t border-border bg-background md:hidden"
+	>
+		<ul class="mx-auto flex max-w-5xl flex-col gap-1 px-4 py-4 sm:px-6">
+			{
+				items.map((item) => (
+					<li>
+						<a
+							href={item.url}
+							target={item.target}
+							class:list={[
+								"block rounded px-3 py-2 transition-colors hover:bg-secondary",
+								isActive(item.url)
+									? "font-medium text-primary"
+									: "text-foreground/80",
+							]}
+						>
+							{item.label}
+						</a>
+					</li>
+				))
+			}
+		</ul>
+	</div>
+</header>
+
+<script>
+	const toggle = document.getElementById("nav-toggle");
+	const menu = document.getElementById("mobile-nav");
+	const iconOpen = document.getElementById("nav-icon-open");
+	const iconClose = document.getElementById("nav-icon-close");
+
+	if (toggle && menu && iconOpen && iconClose) {
+		toggle.addEventListener("click", () => {
+			const isOpen = menu.classList.toggle("hidden") === false;
+			toggle.setAttribute("aria-expanded", String(isOpen));
+			toggle.setAttribute(
+				"aria-label",
+				isOpen ? "メニューを閉じる" : "メニューを開く",
+			);
+			iconOpen.classList.toggle("hidden", isOpen);
+			iconClose.classList.toggle("hidden", !isOpen);
+		});
+	}
+</script>
