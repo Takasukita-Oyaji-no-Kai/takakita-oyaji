@@ -10,6 +10,15 @@ const { entry: hero, cacheHint: heroHint } = await getEmDashEntry(
 );
 if (heroHint) Astro.cache.set(heroHint);
 
+const { entries: values, cacheHint: valuesHint } = await getEmDashCollection(
+	"values",
+	{
+		status: "published",
+		orderBy: { created_at: "asc" },
+	},
+);
+if (valuesHint) Astro.cache.set(valuesHint);
+
 const { entries: activities, cacheHint: activitiesHint } =
 	await getEmDashCollection("activities", {
 		status: "published",
@@ -27,28 +36,6 @@ const { entries: posts, cacheHint: postsHint } = await getEmDashCollection(
 	},
 );
 if (postsHint) Astro.cache.set(postsHint);
-
-const values = [
-	{
-		title: "子どもたちとの触れ合い",
-		description:
-			"イベント活動を通じて、子どもたちと楽しく交流し、健全な成長をサポートします。",
-	},
-	{
-		title: "おやじ同士の絆",
-		description:
-			"活動を通じておやじ同士の交流を深め、互いに支え合う関係を築きます。",
-	},
-	{
-		title: "楽しむこと",
-		description:
-			"おやじたち自身もしっかり楽しむことができる会です。できる時に、できることを楽しむ！",
-	},
-	{
-		title: "活動の実績",
-		description: "スキー、釣り、BBQなど、様々な活動を実現してきました。",
-	},
-];
 
 function getImageUrl(img: unknown): string | undefined {
 	if (!img || typeof img !== "object") return undefined;
@@ -106,26 +93,30 @@ function getImageUrl(img: unknown): string | undefined {
 	<Squiggle />
 
 	{/* Values */}
-	<section class="mx-auto max-w-5xl px-4 sm:px-6">
-		<header class="text-center">
-			<h2 class="text-3xl font-bold text-foreground">活動理念</h2>
-			<p class="mt-3 text-muted-foreground">
-				私たちが大切にしている4つのこと
-			</p>
-		</header>
-		<div class="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-			{
-				values.map((v) => (
-					<article class="rounded-lg border border-border bg-card p-6 transition-colors hover:border-primary">
-						<h3 class="text-lg font-bold text-foreground">{v.title}</h3>
-						<p class="mt-3 text-sm leading-relaxed text-muted-foreground">
-							{v.description}
-						</p>
-					</article>
-				))
-			}
-		</div>
-	</section>
+	{
+		values.length > 0 && (
+			<section class="mx-auto max-w-5xl px-4 sm:px-6">
+				<header class="text-center">
+					<h2 class="text-3xl font-bold text-foreground">活動理念</h2>
+					<p class="mt-3 text-muted-foreground">
+						私たちが大切にしていること
+					</p>
+				</header>
+				<div class="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+					{values.map((v) => (
+						<article class="rounded-lg border border-border bg-card p-6 transition-colors hover:border-primary">
+							<h3 class="text-lg font-bold text-foreground">{v.data.title}</h3>
+							{v.data.description && (
+								<p class="mt-3 text-sm leading-relaxed text-muted-foreground">
+									{v.data.description}
+								</p>
+							)}
+						</article>
+					))}
+				</div>
+			</section>
+		)
+	}
 
 	<Squiggle />
 

@@ -47,10 +47,24 @@ export interface Page {
   bylines?: ContentBylineCredit[];
 }
 
+export interface Value {
+  id: string;
+  slug: string | null;
+  status: string;
+  title: string;
+  description?: string;
+  order?: number;
+  createdAt: Date;
+  updatedAt: Date;
+  publishedAt: Date | null;
+  bylines?: ContentBylineCredit[];
+}
+
 declare module "emdash" {
   interface EmDashCollections {
     activities: Activity;
     blog: Blog;
     pages: Page;
+    values: Value;
   }
 }
