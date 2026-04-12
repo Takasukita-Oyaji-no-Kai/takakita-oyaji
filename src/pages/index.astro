@@ -47,13 +47,15 @@ function getImageUrl(img: unknown): string | undefined {
 		(typeof o.id === "string" ? o.id : undefined);
 	return key ? `/_emdash/api/media/file/${key}` : undefined;
 }
+
+const heroBg = getImageUrl(hero?.data.image) ?? "/hero.jpeg";
 ---
 
 <Base title="高北おやじの会">
 	{/* Hero */}
 	<section class="relative isolate overflow-hidden">
 		<img
-			src="/hero.jpeg"
+			src={heroBg}
 			alt=""
 			aria-hidden="true"
 			class="absolute inset-0 -z-10 h-full w-full object-cover"

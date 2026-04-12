@@ -96,6 +96,11 @@
 					"searchable": true
 				},
 				{
+					"slug": "image",
+					"label": "メイン画像",
+					"type": "image"
+				},
+				{
 					"slug": "body",
 					"label": "本文",
 					"type": "portableText",

@@ -6,6 +6,19 @@ import Squiggle from "../components/Squiggle.astro";
 
 const { entry: page, cacheHint } = await getEmDashEntry("pages", "about");
 if (cacheHint) Astro.cache.set(cacheHint);
+
+function getImageUrl(img: unknown): string | undefined {
+	if (!img || typeof img !== "object") return undefined;
+	const o = img as Record<string, unknown>;
+	if (typeof o.src === "string" && o.src) return o.src;
+	const meta = o.meta as Record<string, unknown> | undefined;
+	const key =
+		(typeof meta?.storageKey === "string" ? meta.storageKey : undefined) ||
+		(typeof o.id === "string" ? o.id : undefined);
+	return key ? `/_emdash/api/media/file/${key}` : undefined;
+}
+
+const aboutImage = getImageUrl(page?.data.image);
 ---
 
 <Base
@@ -24,6 +37,18 @@ if (cacheHint) Astro.cache.set(cacheHint);
 		</header>
 
 		<Squiggle />
+
+		{
+			aboutImage && (
+				<div class="mx-auto mb-12 max-w-4xl overflow-hidden rounded-lg">
+					<img
+						src={aboutImage}
+						alt={page?.data.title ?? "高北おやじの会"}
+						class="aspect-[16/9] w-full object-cover"
+					/>
+				</div>
+			)
+		}
 
 		<div class="mx-auto max-w-3xl">
 			{
