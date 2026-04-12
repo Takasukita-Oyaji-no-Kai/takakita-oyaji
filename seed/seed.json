@@ -16,6 +16,7 @@
 		{
 			"slug": "blog",
 			"label": "ブログ",
+			"urlPattern": "/blog/{slug}",
 			"supports": ["drafts", "revisions", "search", "seo"],
 			"fields": [
 				{
@@ -86,6 +87,7 @@
 		{
 			"slug": "pages",
 			"label": "ページ",
+			"urlPattern": "/{slug}",
 			"supports": ["drafts", "revisions"],
 			"fields": [
 				{
