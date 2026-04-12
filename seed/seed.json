@@ -320,6 +320,56 @@
 					"body": [
 						{
 							"_type": "block",
+							"style": "h3",
+							"children": [{ "_type": "span", "text": "メールアドレス" }]
+						},
+						{
+							"_type": "block",
+							"style": "normal",
+							"markDefs": [
+								{
+									"_key": "contact-email-link",
+									"_type": "link",
+									"href": "mailto:info@takakitaoyaji.com"
+								}
+							],
+							"children": [
+								{
+									"_type": "span",
+									"text": "info@takakitaoyaji.com",
+									"marks": ["contact-email-link"]
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"style": "h3",
+							"children": [{ "_type": "span", "text": "入会について" }]
+						},
+						{
+							"_type": "block",
+							"style": "normal",
+							"children": [
+								{ "_type": "span", "text": "入会費用はかかりません。" }
+							]
+						},
+						{
+							"_type": "block",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"text": "ご入会いただきますと、おやじの会の連絡メールが届くようになります。"
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"style": "h3",
+							"children": [{ "_type": "span", "text": "返信について" }]
+						},
+						{
+							"_type": "block",
 							"style": "normal",
 							"children": [
 								{

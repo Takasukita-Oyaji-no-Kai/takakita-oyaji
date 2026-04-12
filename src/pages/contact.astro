@@ -27,35 +27,17 @@ if (cacheHint) Astro.cache.set(cacheHint);
 		<Squiggle />
 
 		<div class="mx-auto grid max-w-4xl gap-12 sm:grid-cols-[1fr_1.2fr]">
-			{/* Left column: contact info */}
-			<aside class="space-y-6">
-				<div>
-					<h2 class="text-sm font-medium uppercase tracking-wider text-muted-foreground">
-						メールアドレス
-					</h2>
-					<a
-						href="mailto:info@takakitaoyaji.com"
-						class="mt-2 inline-block text-lg text-primary hover:opacity-80"
-					>
-						info@takakitaoyaji.com
-					</a>
-				</div>
-
-				<div>
-					<h2 class="text-sm font-medium uppercase tracking-wider text-muted-foreground">
-						入会について
-					</h2>
-					<p class="mt-2 text-foreground/90">入会費用はかかりません。</p>
-					<p class="mt-1 text-sm text-foreground/70">
-						入会いただきますと、おやじの会の連絡メールが届くようになります。
-					</p>
-				</div>
-
+			{/* Left column: contact info (fully CMS-driven) */}
+			<aside class="contact-aside text-foreground/90">
 				{
-					page?.data.body && (
-						<div class="prose-body text-sm text-foreground/80" {...page.edit.body}>
+					page?.data.body ? (
+						<div {...page.edit.body}>
 							<PortableText value={page.data.body} />
 						</div>
+					) : (
+						<p class="text-muted-foreground">
+							コンテンツを準備中です。
+						</p>
 					)
 				}
 			</aside>
@@ -120,6 +102,40 @@ if (cacheHint) Astro.cache.set(cacheHint);
 		</div>
 	</section>
 </Base>
+
+<style>
+	/* Contact-aside Portable Text styling.
+	 * Gives h3 the uppercase muted-label look of the previous hardcoded
+	 * design, and turns body links into the primary-color mailto style. */
+	.contact-aside :global(h3) {
+		font-size: 0.875rem;
+		font-weight: 500;
+		text-transform: uppercase;
+		letter-spacing: 0.08em;
+		color: var(--color-muted-foreground);
+		margin-top: 1.5rem;
+	}
+
+	.contact-aside :global(h3:first-child) {
+		margin-top: 0;
+	}
+
+	.contact-aside :global(p) {
+		margin-top: 0.5rem;
+		line-height: 1.7;
+	}
+
+	.contact-aside :global(a) {
+		color: var(--color-primary);
+		font-size: 1.125rem;
+		display: inline-block;
+		margin-top: 0.5rem;
+	}
+
+	.contact-aside :global(a:hover) {
+		opacity: 0.8;
+	}
+</style>
 
 <script>
 	const form = document.getElementById("contact-form") as HTMLFormElement | null;
