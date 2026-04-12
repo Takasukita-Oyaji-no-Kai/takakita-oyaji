@@ -1,16 +1,13 @@
 ---
-const nav = [
-	{ href: "/", label: "ホーム" },
-	{ href: "/about", label: "私たちについて" },
-	{ href: "/activities", label: "活動内容" },
-	{ href: "/blog", label: "ブログ" },
-	{ href: "/contact", label: "お問い合わせ" },
-];
+import { getMenu } from "emdash";
+
+const menu = await getMenu("primary");
+const items = menu?.items ?? [];
 
 const pathname = Astro.url.pathname.replace(/\/+$/, "") || "/";
-const isActive = (href: string) => {
-	if (href === "/") return pathname === "/";
-	return pathname === href || pathname.startsWith(`${href}/`);
+const isActive = (url: string) => {
+	if (url === "/") return pathname === "/";
+	return pathname === url || pathname.startsWith(`${url}/`);
 };
 ---
 
@@ -26,13 +23,14 @@ const isActive = (href: string) => {
 		<nav class="hidden md:block">
 			<ul class="flex items-center gap-7 text-sm">
 				{
-					nav.map((item) => (
+					items.map((item) => (
 						<li>
 							<a
-								href={item.href}
+								href={item.url}
+								target={item.target}
 								class:list={[
 									"transition-colors hover:text-primary",
-									isActive(item.href)
+									isActive(item.url)
 										? "font-medium text-primary"
 										: "text-foreground/80",
 								]}
@@ -94,13 +92,14 @@ const isActive = (href: string) => {
 	>
 		<ul class="mx-auto flex max-w-5xl flex-col gap-1 px-4 py-4 sm:px-6">
 			{
-				nav.map((item) => (
+				items.map((item) => (
 					<li>
 						<a
-							href={item.href}
+							href={item.url}
+							target={item.target}
 							class:list={[
 								"block rounded px-3 py-2 transition-colors hover:bg-secondary",
-								isActive(item.href)
+								isActive(item.url)
 									? "font-medium text-primary"
 									: "text-foreground/80",
 							]}

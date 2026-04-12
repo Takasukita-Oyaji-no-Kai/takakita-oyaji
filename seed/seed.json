@@ -135,6 +135,20 @@
 		}
 	],
 
+	"menus": [
+		{
+			"name": "primary",
+			"label": "メインナビゲーション",
+			"items": [
+				{ "type": "custom", "label": "ホーム", "url": "/" },
+				{ "type": "custom", "label": "私たちについて", "url": "/about" },
+				{ "type": "custom", "label": "活動内容", "url": "/activities" },
+				{ "type": "custom", "label": "ブログ", "url": "/blog" },
+				{ "type": "custom", "label": "お問い合わせ", "url": "/contact" }
+			]
+		}
+	],
+
 	"content": {
 		"activities": [
 			{
