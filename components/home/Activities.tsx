@@ -28,8 +28,7 @@ const activities = [
     title: "学校に泊まろう（ガクトマ）",
     description:
       "校庭での水風船や水鉄砲遊び、夜の肝試しなど、非日常の体験を通じて自助・共助の大切さを学ぶイベントです。",
-    image:
-      "https://res.cloudinary.com/duh9jrbpp/image/upload/v1747184527/gakutoma_dzcyv7.jpg",
+    image: "/hero.jpeg",
     icon: <Calendar className="h-6 w-6" />,
     date: "7月",
   },

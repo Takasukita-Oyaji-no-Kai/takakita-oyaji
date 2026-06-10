@@ -39,57 +39,66 @@ export default function BlogSection({ posts }: BlogSectionProps) {
           </p>
         </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {posts.map((post, index) => (
-            <motion.article
-              key={post.slug}
+        {posts.length === 0 ? (
+          <div className="text-center py-12 bg-bg-base rounded-lg shadow">
+            <p className="text-lg text-text-muted">現在、投稿はありません。</p>
+            <p className="mt-2">最初の記事をお待ちください。</p>
+          </div>
+        ) : (
+          <>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {posts.map((post, index) => (
+                <motion.article
+                  key={post.slug}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: index * 0.1 }}
+                  className="blog-card group"
+                >
+                  <Link href={`/blog/${post.slug}`} className="block">
+                    <div className="relative h-48 overflow-hidden">
+                      <Image
+                        src={post.image}
+                        alt={post.title}
+                        fill
+                        className="object-cover transition-transform duration-500 group-hover:scale-105"
+                      />
+                    </div>
+                    <div className="p-6">
+                      <div className="flex items-center text-sm text-text-muted mb-3 space-x-4">
+                        <div className="flex items-center">
+                          <CalendarIcon className="mr-1 h-4 w-4" />
+                          <time dateTime={post.date}>{formatDate(post.date)}</time>
+                        </div>
+                        <div className="flex items-center">
+                          <User className="mr-1 h-4 w-4" />
+                          <span>{post.author}</span>
+                        </div>
+                      </div>
+                      <h3 className="text-xl font-bold mb-2 line-clamp-2 group-hover:text-accent transition-colors">
+                        {post.title}
+                      </h3>
+                      <p className="text-text-muted line-clamp-3">{post.excerpt}</p>
+                    </div>
+                  </Link>
+                </motion.article>
+              ))}
+            </div>
+
+            <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: index * 0.1 }}
-              className="blog-card group"
+              transition={{ duration: 0.6, delay: 0.4 }}
+              className="text-center mt-12"
             >
-              <Link href={`/blog/${post.slug}`} className="block">
-                <div className="relative h-48 overflow-hidden">
-                  <Image
-                    src={post.image}
-                    alt={post.title}
-                    fill
-                    className="object-cover transition-transform duration-500 group-hover:scale-105"
-                  />
-                </div>
-                <div className="p-6">
-                  <div className="flex items-center text-sm text-text-muted mb-3 space-x-4">
-                    <div className="flex items-center">
-                      <CalendarIcon className="mr-1 h-4 w-4" />
-                      <time dateTime={post.date}>{formatDate(post.date)}</time>
-                    </div>
-                    <div className="flex items-center">
-                      <User className="mr-1 h-4 w-4" />
-                      <span>{post.author}</span>
-                    </div>
-                  </div>
-                  <h3 className="text-xl font-bold mb-2 line-clamp-2 group-hover:text-accent transition-colors">
-                    {post.title}
-                  </h3>
-                  <p className="text-text-muted line-clamp-3">{post.excerpt}</p>
-                </div>
+              <Link href="/blog" className="btn-primary">
+                すべての記事を読む
               </Link>
-            </motion.article>
-          ))}
-        </div>
-
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.4 }}
-          className="text-center mt-12"
-        >
-          <Link href="/blog" className="btn-primary">
-            すべての記事を読む
-          </Link>
-        </motion.div>
+            </motion.div>
+          </>
+        )}
       </div>
     </section>
   );
