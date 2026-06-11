@@ -12,6 +12,12 @@ import { CalendarIcon, User, ArrowLeft } from "lucide-react";
 
 export async function generateStaticParams() {
   const posts = await getSortedPostsData();
+  // `output: "export"` requires every dynamic route to pre-render at least one
+  // path. When there are no posts yet, emit a placeholder slug so the build
+  // succeeds; it renders the not-found page and is dropped once real posts exist.
+  if (posts.length === 0) {
+    return [{ slug: "no-posts" }];
+  }
   return posts.map((post: BlogPost) => ({
     slug: post.slug,
   }));
