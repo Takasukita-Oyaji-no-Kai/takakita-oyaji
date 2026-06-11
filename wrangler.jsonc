@@ -1,0 +1,10 @@
+{
+  // Cloudflare Pages configuration.
+  // Built with @cloudflare/next-on-pages, which emits a Worker that uses
+  // Node.js built-ins (fs/path) at build time and the Node compat layer at
+  // runtime — so the `nodejs_compat` flag is required.
+  "name": "takakita-oyaji",
+  "compatibility_date": "2024-09-23",
+  "compatibility_flags": ["nodejs_compat"],
+  "pages_build_output_dir": ".vercel/output/static"
+}
