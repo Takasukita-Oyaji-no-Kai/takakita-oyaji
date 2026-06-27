@@ -10,8 +10,7 @@ const activities = [
     location: "高洲北小学校",
     description:
       "新年の風物詩として、親子や地域のメンバーが集まり、杵と臼を使って協力しながら餅つきを行います。つきたてのお餅をみんなで丸めて味わい、一年の健康と幸せを願う温かな交流の場です。",
-    image:
-      "https://res.cloudinary.com/duh9jrbpp/image/upload/v1747184526/mochi-tsuki_xgbvya.jpg",
+    image: "/assets/mochi-tsuki.jpeg",
   },
   {
     id: "sports-day",
