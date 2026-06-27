@@ -24,13 +24,13 @@ export default function ContactPage() {
                 <h3 className="font-bold mb-1">メールアドレス</h3>
                 <p>
                   <a
-                    href="mailto:info@takakitaoyaji.com"
+                    href="mailto:takasukitaoyajinokai@gmail.com"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="hover:underline inline-flex items-center"
                   >
                     <Mail className="mr-2 h-5 w-5" />
-                    <span>info@takakitaoyaji.com</span>
+                    <span>takasukitaoyajinokai@gmail.com</span>
                   </a>
                 </p>
               </div>
