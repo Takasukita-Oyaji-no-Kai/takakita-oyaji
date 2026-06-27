@@ -85,12 +85,12 @@ export default function AboutPage() {
                 <p className="font-bold">連絡先</p>
                 <p className="mb-2">
                   <a
-                    href="mailto:info@takakitaoyaji.com"
+                    href="mailto:takasukitaoyajinokai@gmail.com"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="hover:underline inline-flex items-center"
                   >
-                    <span>info@takakitaoyaji.com</span>
+                    <span>takasukitaoyajinokai@gmail.com</span>
                   </a>
                 </p>
               </div>
