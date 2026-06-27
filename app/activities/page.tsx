@@ -39,7 +39,7 @@ const activities = [
     location: "高洲北小学校",
     description:
       "校庭での水風船や水鉄砲遊び、夜の肝試しなど、非日常の体験を通じて自助・共助の大切さを学ぶイベントです。",
-    image: "/hero.jpeg",
+    image: "/assets/gakutoma.jpeg",
   },
   {
     id: "music-festival",
